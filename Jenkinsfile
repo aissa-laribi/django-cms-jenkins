@@ -19,7 +19,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'ls' 
+                sh 'python3 manage.py' 
             }
         }
     }
