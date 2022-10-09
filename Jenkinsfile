@@ -19,8 +19,8 @@ pipeline {
                 }
             }
             steps {
-                sh 'apt update -y'
-                sh 'apt install python3 && git && pip'
+                sh 'apt-get update -y'
+                sh 'apt-get install python3 git pip'
                 sh 'ls' 
             }
         }
