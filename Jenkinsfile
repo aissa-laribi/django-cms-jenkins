@@ -19,8 +19,6 @@ pipeline {
                 }
             }
             steps {
-                sh 'python3 -m venv venv'
-                sh 'source venv/bin/activate'
                 sh 'pip install -r test_requirements/django-4.0.txt --user'
                 sh 'pip install -r docs/requirements.txt --user'
                 sh 'python3 manage.py test' 
