@@ -19,7 +19,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'python3 manage.py' 
+                sh 'pip install -r test_requirements/django-4.0.txt'
+                sh 'pip install -r docs/requirements.txt'
+                sh 'python3 manage.py test' 
             }
         }
     }
