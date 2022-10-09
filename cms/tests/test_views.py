@@ -1,5 +1,6 @@
 import re
 import sys
+import unittest
 
 from django.conf import settings
 from django.contrib.auth.models import Permission
@@ -322,3 +323,6 @@ class ContextTests(CMSTestCase):
                 response = self.client.get("/en/page-2/")
                 template = Variable('CMS_TEMPLATE').resolve(response.context)
                 self.assertEqual(template, page_template)
+
+if __name__ == '__main__':
+    unittest.main()
