@@ -15,12 +15,10 @@ pipeline {
         stage('Test') { 
             agent {
                 docker {
-                    image 'ubuntu' 
+                    image 'aissalaribi/jenkins-pytest' 
                 }
             }
             steps {
-                sh 'apt-get update -y'
-                sh 'apt-get install python3 git pip'
                 sh 'ls' 
             }
         }
