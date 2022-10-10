@@ -12,22 +12,6 @@ pipeline {
                 stash(name: 'compiled-results', includes: '*.py*')
             }
         }
-        stage('Test') { 
-            agent {
-                docker {
-                    image 'aissalaribi/jenkins-pytest:latest'
-                    args '--user 0:0'
-                }
-            }
-            steps {
-                sh '''#!/bin/bash
-
-                    pip install -r test_requirements/django-4.0.txt --user
-                    pip install -r docs/requirements.txt --user
-                    python3 manage.py test
-                '''
-            }
-        }
         stage('Deliver') { 
             agent any
             environment { 
@@ -37,7 +21,9 @@ pipeline {
             steps {
                 dir(path: env.BUILD_ID) { 
                     unstash(name: 'compiled-results') 
-                    sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller manage.py'" 
+                    sh "docker run --name pyinstaller --rm -v ${VOLUME} ${IMAGE}"
+                    sh "docker exec pyinstaller sh -c 'pyinstaller manage.py'"
+                     
                 }
             }
             post {
