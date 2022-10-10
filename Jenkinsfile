@@ -9,16 +9,31 @@ pipeline {
                 }
             }
             steps {
-                sh 'python3 -m py_compile setup.py'
+                sh 'python -m py_compile setup.py'
                 stash(name: 'compiled-results', includes: '*.py*')
+            }
+        }
+        stage('Test') { 
+            agent {
+                docker {
+                    image 'aissalaribi/jenkins-pytest:latest'
+                    args '--user 0:0'
+                }
+                
+            }
+            steps {
+                sh '''#!/bin/bash
+                    pip install -r test_requirements/django-4.0.txt --user
+                    pip install -r docs/requirements.txt --user
+                    python3 manage.py test
+                '''
             }
         }
         stage('Deliver') { 
             agent {
-                docker {
+            docker {
                     image 'cdrx/pyinstaller:python3'
                     args "--entrypoint=''"
-                }
             }
             steps {
                 unstash(name: 'compiled-results') 
@@ -31,9 +46,10 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts "${env.BUILD_ID} manage.py" 
+                    archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals" 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
                 }
             }
         }
     }
+}
