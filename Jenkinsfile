@@ -19,8 +19,8 @@ pipeline {
                 }
             }
             steps {
-                sh 'apt install python3.10-venv'
-                sh 'python3 -m venv venv'
+                bash 'apt install python3.10-venv'
+                bash 'python3 -m venv venv'
                 bash 'venv/source/bin'
                 bash 'pip install -r test_requirements/django-4.0.txt --user'
                 bash 'pip install -r docs/requirements.txt --user'
