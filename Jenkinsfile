@@ -20,13 +20,10 @@ pipeline {
             }
             steps {
                 sh '''#!/bin/bash 
-                    python3 -m venv venv
-                    source venv/bin/activate
-                    pip install -r test_requirements/django-4.0.txt --user
-                    pip install -r docs/requirements.txt --user
-                    pwd
-                    ls
+                    pip install -r test_requirements/django-4.0.txt
+                    pip install -r docs/requirements.txt
                     pip list
+                    ls -l
                 '''
             }
         }
