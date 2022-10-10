@@ -26,6 +26,7 @@ pipeline {
                     pip install -r docs/requirements.txt --user
                     pwd
                     ls
+                    pip list
                 '''
             }
         }
