@@ -15,7 +15,7 @@ pipeline {
         stage('Test') { 
             agent {
                 docker {
-                    image 'aissalaribi/jenkins-pytest' 
+                    image 'aissalaribi/jenkins-pytest:latest' 
                 }
             }
             steps {
