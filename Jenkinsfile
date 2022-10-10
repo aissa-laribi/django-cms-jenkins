@@ -8,7 +8,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'python -m py_compile ./manage.py'
+                sh 'python -m py_compile setup.py'
                 stash(name: 'compiled-results', includes: '*.py*')
             }
         }
@@ -22,7 +22,7 @@ pipeline {
                 dir(path: env.BUILD_ID) { 
                     unstash(name: 'compiled-results') 
                     sh "docker run -dit --name py-installer --rm -v ${VOLUME} ${IMAGE}"
-                    sh "docker exec py-installer sh -c 'ls'"
+                    sh "docker exec py-installer sh -c 'pyinstaller manage.py'"
                      
                 }
             }
