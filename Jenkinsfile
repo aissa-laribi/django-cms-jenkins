@@ -24,7 +24,7 @@ pipeline {
                     source venv/bin/activate
                     pip install -r test_requirements/django-4.0.txt --user
                     pip install -r docs/requirements.txt --user
-                    python3 manage.py test
+                    pwd
                 '''
             }
         }
