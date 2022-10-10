@@ -13,17 +13,19 @@ pipeline {
             }
         }
         stage('Deliver') { 
-            agent any
-            environment { 
-                VOLUME = '$(pwd)/sources:/src'
-                IMAGE = 'cdrx/pyinstaller-linux:python3'
+            agent {
+                docker {
+                    image 'cdrx/pyinstaller:python3'
+                    args "--entrypoint=''"
+                }
             }
             steps {
-                dir(path: env.BUILD_ID) { 
-                    unstash(name: 'compiled-results') 
-                    sh "docker run -dit --name py-installer --rm -v ${VOLUME} ${IMAGE}"
-                    sh "docker exec py-installer sh -c 'pyinstaller manage.py'"
-                     
+                unstash(name: 'compiled-results') 
+                echo "Something"
+                sh '''
+                    pyinstaller -F setup.py
+                    ls
+                '''     
                 }
             }
             post {
