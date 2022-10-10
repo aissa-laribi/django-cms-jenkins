@@ -5,6 +5,7 @@ pipeline {
             agent {
                 docker {
                     image 'python:3-alpine'
+                    args '--user 0:0'
                 }
             }
             steps {
