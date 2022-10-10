@@ -22,7 +22,7 @@ pipeline {
                 dir(path: env.BUILD_ID) { 
                     unstash(name: 'compiled-results') 
                     sh "docker run -dit --name py-installer --rm -v ${VOLUME} ${IMAGE}"
-                    sh "docker exec -it py-installer sh -c 'pyinstaller manage.py'"
+                    sh "docker exec py-installer sh -c 'pyinstaller manage.py'"
                      
                 }
             }
