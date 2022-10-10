@@ -20,7 +20,8 @@ pipeline {
             }
             steps {
                 sh '''#!/bin/bash
-                    sudo pip install -r test_requirements/django-4.0.txt
+                    su -u
+                    pip install -r test_requirements/django-4.0.txt
                     pip install -r docs/requirements.txt
                     pip list
                     ls -l
