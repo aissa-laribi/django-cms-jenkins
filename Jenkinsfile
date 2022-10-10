@@ -20,11 +20,9 @@ pipeline {
             }
             steps {
                 sh '''#!/bin/bash
-                    su -
-                    pip install -r test_requirements/django-4.0.txt
-                    pip install -r docs/requirements.txt
+                    pip install -r test_requirements/django-4.0.txt --cache-dir="$(mktemp --directory)" --user
+                    pip install -r docs/requirements.txt --cache-dir="$(mktemp --directory)" --user
                     pip list
-                    ls -l
                 '''
             }
         }
