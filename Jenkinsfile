@@ -30,10 +30,10 @@ pipeline {
             }
         }
         stage('Deliver') { 
-            agent {
-                docker {
-                    image 'cdrx/pyinstaller:python3'
-                    args "--entrypoint=''"
+            agent any {
+                environment {
+                    IMAGE = 'cdrx/pyinstaller:python3'
+                    ARGS = "--entrypoint=''"
                 }
             steps {
                 unstash(name: 'compiled-results') 
