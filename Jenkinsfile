@@ -9,8 +9,12 @@ pipeline {
                 }
             }
             steps {
-                sh 'python3 -m py_compile setup.py'
-                stash(name: 'compiled-results', includes: '*.py*')
+                sh '''#!/bin/bash
+                    pip install -r test_requirements/django-4.0.txt --user
+                    pip install -r docs/requirements.txt --user
+                    pip list
+                    python3 manage.py runserver
+                '''
             }
         }
         stage('Test') { 
@@ -28,7 +32,11 @@ pipeline {
                     python3 manage.py test
                 '''
             }
-        }
+            post {
+                always {
+                    junit 'test-reports/*.xml'
+                    }
+                }
         stage('Deploy') {
             agent {
                 docker {
