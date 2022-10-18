@@ -1,6 +1,7 @@
-pipeline {
-    agent none 
-    stages {
+/* groovylint-disable-next-line CompileStatic */
+pipeline
+    agent none
+    stages
         stage('Build') {
             agent {
                 docker {
@@ -16,8 +17,7 @@ pipeline {
                     python3 manage.py runserver
                 '''
             }
-        }
-        stage('Test') { 
+        stage('Test') {
             agent {
                 docker {
                     image 'aissalaribi/jenkins-pytest:latest'
