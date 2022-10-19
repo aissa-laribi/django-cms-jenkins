@@ -27,12 +27,12 @@ pipeline {
                     pip install -r test_requirements/django-4.0.txt --user
                     pip install -r docs/requirements.txt --user
                     pip list
-                    python3 manage.py test
+                    coverage run --include='./*' manage.py test
                 '''
             }
             post {
                 always {
-                    junit 'test-results/*.xml'
+                    coverage 'coverage report'
                 }
             }
         }
