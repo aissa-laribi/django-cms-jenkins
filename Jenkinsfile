@@ -1,11 +1,10 @@
-/* groovylint-disable-next-line CompileStatic */
-pipeline
-    agent none
-    stages
+pipeline {
+    agent none 
+    stages {
         stage('Build') {
             agent {
                 docker {
-                    image 'python:3-alpine'
+                    image 'python:3.9-bullseye'
                     args '--user 0:0'
                 }
             }
@@ -13,11 +12,10 @@ pipeline
                 sh '''#!/bin/bash
                     pip install -r test_requirements/django-4.0.txt --user
                     pip install -r docs/requirements.txt --user
-                    pip list
-                    python3 manage.py runserver
                 '''
             }
-        stage('Test') {
+        }
+        stage('Test') { 
             agent {
                 docker {
                     image 'aissalaribi/jenkins-pytest:latest'
@@ -34,9 +32,10 @@ pipeline
             }
             post {
                 always {
-                    junit 'test-reports/*.xml'
-                    }
+                    junit skipPublishingChecks: true, testResults: 'test-results/*.xml'
                 }
+            }
+        }
         stage('Deploy') {
             agent {
                 docker {
