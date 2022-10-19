@@ -28,11 +28,12 @@ pipeline {
                     pip install -r docs/requirements.txt --user
                     pip list
                     python3 -m coverage run --include='./*' manage.py test
+                    python3 -m coverage report
                 '''
             }
             post {
                 always {
-                    coverage 'coverage report'
+                    coverage 'python3 -m coverage report'
                 }
             }
         }
