@@ -27,7 +27,7 @@ pipeline {
                     pip install -r test_requirements/django-4.0.txt --user
                     pip install -r docs/requirements.txt --user
                     pip list
-                    coverage run --include='./*' manage.py test
+                    python3 -m coverage run --include='./*' manage.py test
                 '''
             }
             post {
