@@ -10,7 +10,7 @@ pipeline {
             }
             steps {
                 sh '''#!/bin/bash
-                    sudo pip install -r test_requirements/django-4.0.txt --user
+                    pip install -r test_requirements/django-4.0.txt --user
                     pip install -r docs/requirements.txt --user
                 '''
             }
