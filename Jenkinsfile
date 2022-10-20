@@ -34,7 +34,7 @@ pipeline {
                     allowMissing: false,
                     alwaysLinkToLastBuild: false,
                     keepAll: true,
-                    reportDir: 'coverage',
+                    reportDir: '.',
                     reportFiles: 'test-report.xml',
                     reportName: 'RCov Report'
                 ]
@@ -42,11 +42,13 @@ pipeline {
         }
         stage('Deploy') {
             agent {
-                dockerfile true
-            }
+                docker {
+                    image 'python:3.9-bullseye'
+                    args '--user 0:0'
+                }
             steps {
-                sh 'node --version'
-                sh 'svn --version'
+                sh 'pip install -r docs/requirements.txt'
+                sh 'python3 manage.py collectstatic --noinput'
             }
         }
     }
