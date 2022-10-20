@@ -46,6 +46,7 @@ pipeline {
                     image 'python:3.9-bullseye'
                     args '--user 0:0'
                 }
+            }
             steps {
                 sh 'pip install -r docs/requirements.txt'
                 sh 'python3 manage.py collectstatic --noinput'
