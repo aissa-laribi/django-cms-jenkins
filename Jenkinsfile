@@ -37,18 +37,16 @@ pipeline {
                     reportDir: 'coverage',
                     reportFiles: 'test-report.xml',
                     reportName: 'RCov Report'
-                    ]
-                }     
+                ]
+            }     
         }
         stage('Deploy') {
             agent {
-                docker {
-                    image 'aissalaribi/pyinstaller-linux:latest'
-                    args '--user 0:0'
-                }
+                dockerfile true
             }
             steps {
-                sh 'pyinstaller --onefile setup.py'
+                sh 'node --version'
+                sh 'svn --version'
             }
             post {
                 success {
