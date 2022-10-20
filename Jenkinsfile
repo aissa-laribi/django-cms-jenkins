@@ -48,11 +48,6 @@ pipeline {
                 sh 'node --version'
                 sh 'svn --version'
             }
-            post {
-                success {
-                    archiveArtifacts 'dist/setup'
-                }
-            }
         }
     }
 }
