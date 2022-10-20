@@ -42,15 +42,19 @@ pipeline {
         }
         stage('Deploy') {
             agent {
-                docker {
-                    image 'python:3.9-bullseye'
-                    args '--user 0:0'
-                }
+                label 'ubuntu_vm_node'
             }
             steps {
-                sh 'pip install -r docs/requirements.txt --user'
-                sh 'pip install -r test_requirements/django-4.0.txt --user'
-                sh 'python3 manage.py collectstatic --noinput'
+                sh '''#!/bin/bash
+                    apt-get update && apt-get install -y git python3-pip 
+                    git clone https://github.com/django-cms/django-cms-quickstart.git
+                    cd django-cms-quickstart
+                    docker compose build web
+                    docker compose up -d database_default
+                    docker compose run web python manage.py migrate
+                    docker compose run web python manage.py createsuperuser
+                    docker compose up -d
+                '''
             }
         }
     }
