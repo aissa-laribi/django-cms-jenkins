@@ -30,7 +30,15 @@ pipeline {
                     python3 -m coverage run --include='./*' manage.py test
                     python3 -m coverage report > test-report.xml
                 '''
-            }
+                publishHTML target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'coverage',
+                    reportFiles: 'test-report.xml',
+                    reportName: 'RCov Report'
+                    ]
+                }     
         }
         stage('Deploy') {
             agent {
