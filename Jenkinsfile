@@ -42,18 +42,16 @@ pipeline {
         }
         stage('Deploy') {
             agent {
-                label 'ubuntu_vm_node'
+                label 'django_cms_node_prod'
             }
             steps {
                 sh '''#!/bin/bash
-                    apt-get update && apt-get install -y git python3-pip 
-                    git clone https://github.com/django-cms/django-cms-quickstart.git
-                    cd django-cms-quickstart
-                    docker compose build web
-                    docker compose up -d database_default
-                    docker compose run web python manage.py migrate
-                    docker compose run web python manage.py createsuperuser
-                    docker compose up -d
+                    cd deploy/django-cms-quickstart
+                    docker-compose build web
+                    docker-compose up -d database_default
+                    docker-compose run web python manage.py migrate
+                    docker-compose run web python manage.py createsuperuser
+                    docker-compose up -d
                 '''
             }
         }
