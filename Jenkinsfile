@@ -1,5 +1,7 @@
+
 pipeline {
-    agent none 
+    agent none
+    env.NODE_ENV = "node-2"
     stages {
         stage('Build') {
             agent {
@@ -38,22 +40,12 @@ pipeline {
                     reportFiles: 'test-report.xml',
                     reportName: 'RCov Report'
                 ]
+            }
+            post {
+                success {
+                    mail to: aissa2retour@gmail.com, subject: ‘The Pipeline success :(‘
+                }
             }     
-        }
-        stage('Deploy') {
-            agent {
-                label 'django_cms_node_prod'
-            }
-            steps {
-                sh '''#!/bin/bash
-                    cd deploy/django-cms-quickstart
-                    docker-compose build web
-                    docker-compose up -d database_default
-                    docker-compose run web python manage.py migrate
-                    docker-compose run web python manage.py createsuperuser
-                    docker-compose up -d
-                '''
-            }
         }
     }
 }
