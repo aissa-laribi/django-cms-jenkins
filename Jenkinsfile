@@ -1,7 +1,6 @@
 
 pipeline {
     agent none
-    env.NODE_ENV = "node-2"
     stages {
         stage('Build') {
             agent {
@@ -41,11 +40,13 @@ pipeline {
                     reportName: 'RCov Report'
                 ]
             }
-            post {
-                success {
-                    mail to: aissa2retour@gmail.com, subject: ‘The Pipeline success :(‘
-                }
-            }     
+        }
+    }
+    post {
+        success {
+            mail to: 'aissa2retour@gmail.com',
+                subject: "Successful Pipeline:",
+                body: "Deploy from Github"
         }
     }
 }
