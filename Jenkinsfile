@@ -44,9 +44,9 @@ pipeline {
     }
     post {
         success {
-            mail to: 'aissa2retour@gmail.com',
-                subject: "Successful Pipeline:",
-                body: "Deploy from Github"
+            script {
+                 def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: 'POST', url: 'https://api.github.com/repos/<username>/<repo>/dispatches'
+            }
         }
     }
 }
