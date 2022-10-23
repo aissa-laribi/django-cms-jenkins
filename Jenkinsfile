@@ -1,6 +1,9 @@
 
 pipeline {
     agent none
+    environment {
+        API_TOKEN = credentials('django_cms_workflow_api_key')
+    }
     stages {
         stage('Build') {
             agent {
@@ -41,11 +44,15 @@ pipeline {
                 ]
             }
         }
-    }
-    post {
-        success {
-            script {
-                 def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: 'POST', url: 'https://api.github.com/repos/aissa-laribi/django-cms-jenkins/dispatches'
+        stage('API call Deploy') {
+            steps {
+                sh '''
+                curl -H "Accept: application/vnd.github.everest-preview+json" \
+                -H "Authorization: token $API_TOKEN" \
+                --request POST \
+                --data '{"event_type": "deploy"}' \
+                https://api.github.com/repos/aissa-laribi/django-cms-jenkins/dispatches
+                '''
             }
         }
     }
