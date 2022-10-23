@@ -1,0 +1,25 @@
+name: Continuous Deployment
+on:
+  repository_dispatch:
+    types: deploy
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: |
+          git clone https://github.com/django-cms/django-cms-quickstart.git
+          cd django-cms-quickstart
+          pwd
+          docker-compose build web
+          docker-compose up -d database_default
+          docker-compose run web python manage.py migrate
+          docker-compose run web python manage.py createsuperuser
+          docker-compose up -d
