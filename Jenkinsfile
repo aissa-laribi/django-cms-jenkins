@@ -28,7 +28,7 @@ pipeline {
                     pip install -r test_requirements/django-4.0.txt --user
                     pip install -r docs/requirements.txt --user
                     pip list
-                    python3 -m coverage run --include='./*' manage.py test
+                    python3 -m coverage run --include='./*' manage.py test -v 2
                     python3 -m coverage report > test-report.xml
                 '''
                 publishHTML target: [
@@ -45,7 +45,7 @@ pipeline {
     post {
         success {
             script {
-                 def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: 'POST', url: 'https://api.github.com/repos/<username>/<repo>/dispatches'
+                 def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: 'POST', url: 'https://api.github.com/repos/aissa-laribi/django-cms-jenkins/dispatches'
             }
         }
     }
