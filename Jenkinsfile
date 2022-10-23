@@ -1,6 +1,6 @@
 
 pipeline {
-    agent none
+    agent any
     environment {
         API_TOKEN = credentials('django_cms_workflow_api_key')
     }
