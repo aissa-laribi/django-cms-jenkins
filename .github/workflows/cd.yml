@@ -15,10 +15,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         script: |
-          git clone https://github.com/django-cms/django-cms-quickstart.git
-          cd django-cms-quickstart
-          pwd
+          cd django-cms-jenkins
           docker-compose build web
-          docker-compose up -d database_default
-          docker-compose run web python manage.py migrate
           docker-compose up -d
+
