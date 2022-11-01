@@ -15,7 +15,13 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         script: |
+          su spoq
           cd django-cms-jenkins
           docker-compose build web
           docker-compose up -d
+          docker stop djangocmsjenkins_web_1 djangocmsjenkins_database_default_1
+          docker rmi $(docker images -q) -f
+          docker start djangocmsjenkins_web_1 djangocmsjenkins_database_default_1
+
+
 
