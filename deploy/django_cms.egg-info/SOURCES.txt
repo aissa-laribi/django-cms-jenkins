@@ -1,0 +1,11 @@
+backend/__init__.py
+backend/asgi.py
+backend/settings.py
+backend/urls.py
+backend/wsgi.py
+django_cms.egg-info/PKG-INFO
+django_cms.egg-info/SOURCES.txt
+django_cms.egg-info/dependency_links.txt
+django_cms.egg-info/not-zip-safe
+django_cms.egg-info/requires.txt
+django_cms.egg-info/top_level.txt
