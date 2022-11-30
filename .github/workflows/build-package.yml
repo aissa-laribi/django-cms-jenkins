@@ -11,8 +11,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: |
-        python3 --version
         python3 -m pip install --upgrade pip
         cd deploy
         pip install -r requirements.txt
         python3 ../setup.py sdist bdist_wheel
+      name: Commit and push changes
+    - run: |
+        git config --global user.name "your username"
+        git config --global user.email "your email"
+
+        git add -A
+        git commit -m "commit message"
+        git push
