@@ -7,9 +7,18 @@ pipeline {
     stages {
         stage('Build') {
             agent {
+<<<<<<< HEAD
                 docker {
                     image 'python:3.9-bullseye'
                     args '--user 0:0'
+=======
+                node {
+                    git '...'
+                    def webEnv = docker.build 'web:snapshot'
+                    webEnv.inside {
+                    sh 'ls'
+                    }
+>>>>>>> parent of e73a2ec62 (Using workspace for build)
                 }
             }
             steps {
